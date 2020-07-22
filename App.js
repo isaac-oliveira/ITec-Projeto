@@ -1,19 +1,24 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { SafeAreaView, Text, StyleSheet, StatusBar } from "react-native";
+import Routes from './src/routes';
+
+import { AuthProvider } from './src/hooks/useAuth';
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Hello world!</Text>
-    </View>
+    <AuthProvider>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor="#DA5C3D"/>
+        <Routes />
+      </SafeAreaView>
+    </AuthProvider>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#DA5C3D'
   },
 });
 
