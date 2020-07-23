@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, View, Text, Image, StyleSheet } from 'react-native';
 
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -9,7 +9,7 @@ import logo from '../assets/logo.png';
 
 const Login = () => {
   const { login } = useAuth();
-  const [email, setEmail] = useState('itec@gmail.com');
+  const [email, setEmail] = useState('itec3@gmail.com');
   const [password, setPassword] = useState('12345');
 
   async function handleLogin() {
@@ -17,7 +17,7 @@ const Login = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.circle}>
         <Image style={styles.img} source={logo} />
       </View>
@@ -33,7 +33,7 @@ const Login = () => {
         value={password} 
         onChangeText={setPassword} />
       <Button title="Entrar" onPress={handleLogin} />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

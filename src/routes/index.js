@@ -1,8 +1,7 @@
 import React from 'react'
 import { Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 
-import Login from '../pages/Login';
+import AuthRouter from './AuthRouter';
 import AppRouter from './AppRouter';
 
 import useAuth from '../hooks/useAuth';
@@ -11,12 +10,10 @@ const Routes = () => {
   const { logged, logout } = useAuth();
 
   if(!logged)
-    return <Login />
+    return <AuthRouter />
 
   return (
-    <NavigationContainer>
       <AppRouter/>
-    </NavigationContainer>
   )
 }
 

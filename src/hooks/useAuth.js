@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { AsyncStorage } from 'react-native';
+import { Alert, AsyncStorage } from 'react-native';
 import api from '../services/api';
 
 export const AuthContext = createContext(null);
@@ -10,9 +10,14 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     AsyncStorage.getItem("@itec/token").then(token => {
-      console.log(token)
-      setLogged(token)
+      if(token) {
+        AsyncStorage.getItem("@itec/user").then(user => {
+          setUser(user);
+          setLogged(token)
+        })
+      }
     });
+    
   }, []);
 
   async function login(email, password) {
@@ -21,14 +26,44 @@ export const AuthProvider = ({ children }) => {
       password
     });
 
-    const { data } = response;
+    const { status, data } = response;
 
-    const { user, token } = data;
+    if(status === 200) {
+      const { user, token } = data;
 
-    await AsyncStorage.setItem("@itec/token", token);
+      await AsyncStorage.setItem("@itec/token", token);
+      await AsyncStorage.setItem("@itec/user", JSON.stringify(user));
 
-    setLogged(true)
-    setUser(user);
+      setLogged(true)
+      setUser(user);
+    } else {
+      Alert.alert("Ops!", data.error)
+    }
+    
+  }
+
+  async function register(email, password, lat, long) {
+    const response = await api.post('/auth/register', {
+      email,
+      password,
+      lat,
+      long
+    });
+
+    const { status, data } = response;
+
+    if(status === 200) {
+      const { user, token } = data;
+
+      await AsyncStorage.setItem("@itec/token", token);
+      await AsyncStorage.setItem("@itec/user", JSON.stringify(user));
+
+      setLogged(true)
+      setUser(user);
+    } else {
+      Alert.alert("Ops!", data.error)
+    }
+
   }
 
   async function logout() {
@@ -38,7 +73,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ logged, login, logout, user }}>
+    <AuthContext.Provider value={{ logged, login, register, logout, user }}>
       {children}
     </AuthContext.Provider>
   );

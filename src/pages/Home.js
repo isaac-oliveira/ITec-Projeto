@@ -35,6 +35,10 @@ const Home = () => {
     navigation.navigate('Add');
   }
 
+  function handleProfile() {
+    navigation.navigate('Profile');
+  }
+
   const renderItem = ({ item }) => {
     return (
       <View style={styles.item}>
@@ -50,8 +54,8 @@ const Home = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.search}>
-          <TouchableOpacity style={styles.btn}>
-            <Feather name="menu"/>
+          <TouchableOpacity style={styles.btn} onPress={handleProfile}>
+            <Feather name="user" color="#313638" size={18} />
           </TouchableOpacity>
           <TextInput  
             style={styles.input} 
@@ -59,7 +63,7 @@ const Home = () => {
             value={query}
             onChangeText={setQuery} />
           <TouchableOpacity style={styles.btn} onPress={logout}>
-            <Feather name="log-out"/>
+            <Feather name="log-out" color="#313638" size={18} />
           </TouchableOpacity>
         </View>
       </View>
