@@ -1,22 +1,22 @@
 import React from 'react';
-import { createStackNavigator  } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import Home from '../pages/Home';
-import Add from '../pages/Add';
-import Profile from '../pages/Profile';
+import Drawer from './DrawerRouter';;
+import AddTec from '../pages/AddTec';
 
-const AppStack = createStackNavigator();
+const { Navigator, Screen } = createStackNavigator();
 
 const AppRouter = () => {
-  return (
-    <AppStack.Navigator screenOptions={{
-      headerShown: false
-    }}>
-      <AppStack.Screen name="Home" component={Home} /> 
-      <AppStack.Screen name="Add" component={Add} /> 
-      <AppStack.Screen name="Profile" component={Profile} /> 
-    </AppStack.Navigator>
-  )
+	return (
+		<Navigator
+			screenOptions={{
+				headerShown: false,
+			}}
+		>
+			<Screen name="Drawer" component={Drawer} />
+			<Screen name="AddTec" component={AddTec} />
+		</Navigator>
+	);
 };
 
 export default AppRouter;

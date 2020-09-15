@@ -1,15 +1,12 @@
 import { create } from 'apisauce';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
+
 const api = create({
-  baseURL: 'https://api-itec.herokuapp.com'
+	baseURL: 'https://api-itec.herokuapp.com',
+	timeout: 5000,
 });
 
-api.addAsyncRequestTransform(async (req) => {
-  const token = await AsyncStorage.getItem("@itec/token");
-
-  req.headers['Authorization'] = `Bearer ${token}`;
-
-  console.log(req);
-});
 
 export default api;
+
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMTgzYWRiOWNhMWRiMDAxNzY3MzhhOSIsImlhdCI6MTU5OTc0NzI3NiwiZXhwIjoxNTk5ODMzNjc2fQ.-U4evmFynmnHf_YX4GhNYOaHWSEFsbKqjXxbirfLqvs

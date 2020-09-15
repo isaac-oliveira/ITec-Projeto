@@ -1,20 +1,23 @@
-import React from 'react'
-import { Button } from 'react-native';
+import React from 'react';
+import { AppLoading } from 'expo';
+
+import useAuth from '../hooks/useAuth';
 
 import AuthRouter from './AuthRouter';
 import AppRouter from './AppRouter';
 
-import useAuth from '../hooks/useAuth';
-
 const Routes = () => {
-  const { logged, logout } = useAuth();
+	const { logged } = useAuth();
 
-  if(!logged)
-    return <AuthRouter />
+	if (logged === null) {
+		return <AppLoading />;
+	}
 
-  return (
-      <AppRouter/>
-  )
-}
+	if (logged === false) {
+		return <AuthRouter />;
+	}
+	return <AppRouter />;
+
+};
 
 export default Routes;

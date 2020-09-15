@@ -1,123 +1,121 @@
+	
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
+import { View, Text, Image, Dimensions, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { useNavigation } from "@react-navigation/native";
 
-import { Feather } from '@expo/vector-icons';
-
-import Coords from '../components/Coords';
 import useAuth from '../hooks/useAuth';
+import IconButton from '../components/IconButton';
+import Coords from '../components/Coords';
 
-import profile from '../assets/user.png'
+import profile from '../assets/user.png';
+
+const { width } = Dimensions.get('screen');
 
 const Profile = () => {
-  const { user, logout } = useAuth();
-  const navigation = useNavigation();
+	const { user, logout } = useAuth();
+	const { openDrawer } = useNavigation();
 
-  function handleHome() {
-    navigation.goBack();
-  }
+	console.log(user);
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.btn} onPress={handleHome}>
-          <Feather name="home" size={18} color="#313638"/>
-        </TouchableOpacity>
-        <Image style={styles.img} source={profile} resizeMode='contain' />
-        <TouchableOpacity style={styles.btn} onPress={logout}>
-          <Feather name="log-out" size={18} color="#313638"/>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.email}>{user?.email}</Text>
+	function handleOpenDrawer() {
+		openDrawer();
+	}
 
-      <MapView 
-        style={styles.map} 
-        initialRegion={{
-          latitude: user?.lat,
-          longitude: user?.long,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}>
+	function handleLogout() {
+		logout();
+	}
 
-          <Marker 
-            coordinate={{
-              latitude: user?.lat,
-              longitude: user?.long,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}/>
-        
-        </MapView>
+	return (
+		<View style={styles.container}>
+			<View style={styles.header}>
+				<IconButton name="menu" onPress={handleOpenDrawer} />
+				<Image style={styles.img} source={profile} resizeMode="center" />
+				<IconButton name="log-out" onPress={handleLogout} />
+			</View>
+			<Text style={styles.email}>{user.email}</Text>
 
-      <View style={styles.card}>
-        <Coords lat={user?.lat} long={user?.long}/>
-      </View>
+			<MapView 
+				style={styles.map}  
+				initialRegion={{
+		      latitude: user.lat,
+		      longitude: user.long,
+		      latitudeDelta: 0.0922,
+      		longitudeDelta: 0.0421,
+	    }}>
 
-    </View>
-  )
+	    <Marker 
+	    	coordinate={{
+	    		latitude: user.lat,
+		      longitude: user.long,
+	    	}} />
+
+	    </MapView>
+
+			<View style={styles.card}>
+				<Coords lat={user.lat} long={user.long} />
+			</View>
+		 
+		</View>
+	)
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    backgroundColor: '#F06543',
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    shadowOffset: {
-      width: 1,
-      height: 1
-    }
-  },
-  btn: {
-    padding: 15,
-  },
-  img: {
-    flex: 1,
-    textAlign: 'center',
-    paddingVertical: 25,
-  },
-  email: {
-    padding: 10,
-    fontSize: 22,
-    color: '#313638'
-  },
-  map: {
-    width: '60%',
-    height: '35%',
-    marginVertical: 20,
-    alignSelf: 'center',
-    borderRadius: 10,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    shadowOffset: {
-      width: 1,
-      height: 1
-    }
-  },
-  card: {
-    margin: 10,
-    width: '60%',
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    alignSelf: 'center',
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    shadowOffset: {
-      width: 1,
-      height: 1
-    }
-  }
+	container: {
+		flex: 1,
+		backgroundColor: '#E0DFD5'
+	},
+	header: {
+		flexDirection: 'row',
+		backgroundColor: '#F06543',
+		elevation: 3,
+		shadowColor: '#000',
+		shadowOpacity: 0.5,
+		shadowRadius: 3,
+		shadowOffset: {
+			width: 1,
+			height: 1
+		}
+	},
+	img: {
+		flex: 1,
+		paddingVertical: 25,
+	},
+	email: {
+		padding: 10,
+		fontSize: 22,
+		color: '#313638'
+	},
+	map: {
+		width: width * 0.8,
+		height: width * 0.6,
+		marginVertical: 20,
+		alignSelf: 'center',
+		borderRadius: 10,
+		elevation: 3,
+		shadowColor: '#000',
+		shadowOpacity: 0.5,
+		shadowRadius: 3,
+		shadowOffset: {
+			width: 1,
+			height: 1
+		}
+	},
+	card: {
+		margin: 10,
+		width: '60%',
+		borderRadius: 10,
+		backgroundColor: '#fff',
+		alignSelf: 'center',
+		elevation: 3,
+		shadowColor: '#000',
+		shadowOpacity: 0.5,
+		shadowRadius: 3,
+		shadowOffset: {
+			width: 1,
+			height: 1
+		}
+	}
 })
 
 export default Profile;

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "iTec",
-    "slug": "snack-76e90e4b-eb9e-4bb5-ac16-78fbfe75eab8",
+    "name": "HelloWorld",
+    "slug": "ITec2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -13,12 +13,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "web": {
-      "favicon": "./src/assets/favicon.png"
+      "favicon": "./assets/favicon.png"
     }
   }
 }
